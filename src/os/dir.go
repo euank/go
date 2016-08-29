@@ -4,6 +4,8 @@
 
 package os
 
+import "errors"
+
 // Readdir reads the contents of the directory associated with file and
 // returns a slice of up to n FileInfo values, as would be returned
 // by Lstat, in directory order. Subsequent calls on the same file will yield
@@ -23,7 +25,11 @@ func (f *File) Readdir(n int) ([]FileInfo, error) {
 	if f == nil {
 		return nil, ErrInvalid
 	}
-	return f.readdir(n)
+	fi, err := f.readdir(n)
+	if err == nil && len(fi) == 0 && n > 0 {
+		err = errors.New("no files found")
+	}
+	return fi, err
 }
 
 // Readdirnames reads and returns a slice of names from the directory f.

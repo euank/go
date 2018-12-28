@@ -10,6 +10,7 @@ import (
 	"errors"
 	"internal/bytealg"
 	"io"
+	"io/ioutil"
 	"os"
 )
 
@@ -76,7 +77,7 @@ func parseNSSConfFile(file string) *nssConf {
 }
 
 func parseNSSConf(r io.Reader) *nssConf {
-	slurp, err := readFull(r)
+	slurp, err := ioutil.ReadAll(r)
 	if err != nil {
 		return &nssConf{err: err}
 	}

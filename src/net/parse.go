@@ -344,20 +344,6 @@ func stringsEqualFold(s, t string) bool {
 	return true
 }
 
-func readFull(r io.Reader) (all []byte, err error) {
-	buf := make([]byte, 1024)
-	for {
-		n, err := r.Read(buf)
-		all = append(all, buf[:n]...)
-		if err == io.EOF {
-			return all, nil
-		}
-		if err != nil {
-			return nil, err
-		}
-	}
-}
-
 // goDebugString returns the value of the named GODEBUG key.
 // GODEBUG is of the form "key=val,key2=val2"
 func goDebugString(key string) string {
